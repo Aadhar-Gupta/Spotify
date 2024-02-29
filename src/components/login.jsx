@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function Login() {
   const handleClick = () => {
     const clientId = "03f4f30e0fe94fd6b0f6d72c1d4c1313"
-    const redirectUrl = "https://spotify-pi-six.vercel.app/"
+    const redirectUrl = "https://aadhar-spotifyclone.vercel.app/"
     const apiUrl = "https://accounts.spotify.com/authorize"
     const scope = [
         "user-library-modify",
