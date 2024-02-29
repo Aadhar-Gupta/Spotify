@@ -1,3 +1,5 @@
+/* eslint-disable no-debugger */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-inner-declarations */
 import { useEffect } from "react";
 import axios from "axios";
@@ -128,7 +130,9 @@ export default function SpotifyPlayer() {
                 };
                 dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying });
                 window.addEventListener("keydown", async (e) => {
-                  debugger
+                  if (e.target.closest(".search__bar")) {
+                    return;
+                  }
                   if (e.key === " ") {
                     await myPlayer.togglePlay();
                   }

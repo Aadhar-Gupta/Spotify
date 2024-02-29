@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-debugger */
 import axios from "axios";
 import React, { useEffect, useRef } from "react";
@@ -9,7 +10,6 @@ import { reducerCases } from "../utils/Constants";
 export default function ViewPlaylist() {
   const [{ token, ViewPlaylist }, dispatch] = useStateProvider();
   const selectedPlaylistId = useParams();
-
   useEffect(() => {
     const getInitialPlaylist = async () => {
       let response = await axios.get(
@@ -22,17 +22,16 @@ export default function ViewPlaylist() {
         }
       );
       response = response.data;
-      debugger
       const selectedPlaylist = {
         id: response.id,
         playlist_uri: response.uri,
         name: response.name,
         description: response.description,
-        image: response.images[0].url,
+        image: response.images && response.images.length > 0 ? response.images[0].url : "",
         tracks: response.tracks.items.map(({ track }) => ({
           id: track.id,
           name: track.name,
-          image: track.album.images[0].url,
+          image: track.album.images && track.album.images.length > 0 ? track.album.images[0].url : "",
           artists: track.artists.map((artist) => artist.name),
           duration: track.duration_ms,
           album: track.album.name,
@@ -50,12 +49,11 @@ export default function ViewPlaylist() {
 
   const playTrack = async (playlist_uri, context_uri) => {
     try {
-      debugger;
       await axios.put(
         `https://api.spotify.com/v1/me/player/play`,
         {
-          context_uri:playlist_uri,
-          offset: {uri:context_uri },
+          context_uri: playlist_uri,
+          offset: { uri: context_uri },
           position_ms: 0,
         },
         {
@@ -65,40 +63,8 @@ export default function ViewPlaylist() {
           },
         }
       );
-      const response = await axios.get(
-        "https://api.spotify.com/v1/me/player/currently-playing",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.data !== "") {
-        const item = response.data;
-        const currentlyPlaying = {
-          id: item.item.id,
-          name: item.item.name,
-          artists: item.item.artists.map((artist) => artist.name),
-          images: [
-            item.item.album.images[1].url,
-            item.item.album.images[2].url,
-          ],
-          context: item.context,
-          currently_playing_type: item.currently_playing_type,
-          is_playing: item.is_playing,
-          progress_ms: item.progress_ms,
-        };
-
-        console.log("Current track:", currentlyPlaying);
-        dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying });
-      } else {
-        dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
-      }
     } catch (error) {
       console.error("Error occurred while playing track:", error);
-      // Handle errors here
     }
   };
 
@@ -141,7 +107,7 @@ export default function ViewPlaylist() {
             <div className="tracks">
               {ViewPlaylist.tracks.map(
                 (
-                  { id, name, artists, context_uri, image, duration, album, track_number },
+                  { id, name, artists, context_uri, image, duration, album },
                   index
                 ) => {
                   return (
@@ -149,7 +115,7 @@ export default function ViewPlaylist() {
                       className="row"
                       key={id}
                       onClick={() =>
-                        playTrack(ViewPlaylist.playlist_uri,context_uri)
+                        playTrack(ViewPlaylist.playlist_uri, context_uri)
                       }
                     >
                       <div className="col">
@@ -157,7 +123,7 @@ export default function ViewPlaylist() {
                       </div>
                       <div className="col detail">
                         <div className="image">
-                          <img src={image} alt="track" />
+                          <img src={image||""} alt="track" />
                         </div>
                         <div className="info">
                           <span className="name">{name}</span>

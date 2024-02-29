@@ -1,15 +1,28 @@
+/* eslint-disable no-unused-vars */
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { useStateProvider } from "../utils/stateProvider";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
 
 export default function Navbar() {
+  const Navigate = useNavigate();
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      const input = e.target.value;
+      Navigate(`/search/${input}`);
+    }
+  };
   const [{ userInfo }] = useStateProvider();
   return (
     <Container>
       <div className="search__bar">
         <FaSearch />
-        <input type="text" placeholder="Artists,Songs Or Podcasts" />
+        <input
+          type="text"
+          placeholder="Artists, Songs Or Podcasts"
+          onKeyDown={handleSearch}
+        />
       </div>
       <div className="avatar">
         <a href={userInfo?.Link}>
@@ -43,7 +56,8 @@ const Container = styled.div`
     gap: 0.5rem;
     input {
       border: none;
-      background-color:transparent;
+      color: black;
+      background-color: transparent;
       height: 2rem;
       width: 100%;
       &:focus {
@@ -51,7 +65,7 @@ const Container = styled.div`
       }
     }
   }
-  .avatar{
+  .avatar {
     background-color: black;
     padding: 0.3rem 0.4rem;
     padding-right: 1rem;
@@ -59,7 +73,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    a{
+    a {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -68,7 +82,7 @@ const Container = styled.div`
       color: white;
       font-weight: 700;
     }
-    img{
+    img {
       width: 30px;
       border-radius: 1rem;
     }

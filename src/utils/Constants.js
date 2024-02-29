@@ -7,4 +7,5 @@ export const reducerCases={
     SET_PLAYER_STATE: "SET_PLAYER_STATE",
     SET_VIEW_PLAYLISTS: "SET_VIEW_PLAYLISTS",
     SET_CAT:'SET_CAT',
+    SEARCH:'SEARCH'
 }

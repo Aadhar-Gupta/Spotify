@@ -18,6 +18,9 @@ export default function PlayerControls() {
       playerState: !playerState,
     });
   };
+
+
+  
   const changeTrack = async (type) => {
     type === "next" ? myPlayer.nextTrack() : myPlayer.previousTrack();
   };

@@ -9,6 +9,7 @@ export const initialState = {
     playerState: false,
     ViewPlaylist: null,
     category: null,
+    search:null,
 };
 
 
@@ -59,6 +60,11 @@ const reducer = (state, action) => {
                     ...state,
                     category: action.category,
                 };
+                case reducerCases.SEARCH:
+                    return {
+                        ...state,
+                        SEARCH: action.search,
+                    };
         default: return state
     }
 }

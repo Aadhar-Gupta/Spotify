@@ -27,10 +27,12 @@ export default function Sidebar() {
             <span>home</span>
           </li>
           </Link>
+          <Link to='/search/:q' >  
           <li>
             <MdSearch/>
             <span>Search</span>
           </li>
+            </Link>
           <li>
             <IoLibrary/>
             <span>Library</span>

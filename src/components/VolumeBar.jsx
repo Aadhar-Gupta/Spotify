@@ -51,6 +51,9 @@ export default function VolumeBar() {
 
 
 const Container = styled.div`
+min-width: 25vw;
+justify-content: center;
+display: flex;
 /* level settings 👇 */
 
 .slider {

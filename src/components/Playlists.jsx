@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from "react";
 import { useStateProvider } from "../utils/stateProvider";
 import axios from "axios";
@@ -23,7 +24,6 @@ export default function Playlists() {
         }
       );
       const { items } = response.data;
-      debugger;
       const playlists = items.map(({ name, id, images }) => {
         const iconUrl = images[0].url;
         return { name, id, iconUrl };
@@ -32,7 +32,6 @@ export default function Playlists() {
       dispatch({ type: reducerCases.SET_PLAYLISTS, playlists: newPlaylists.current });
     };
     getPlaylistData();
-
     console.log("newPlaylists", newPlaylists);
   }, []);
 
