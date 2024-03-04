@@ -7,8 +7,7 @@ import { useState, useEffect } from "react";
 import { useStateProvider } from "../utils/stateProvider";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Pagination, Navigation } from "swiper/modules";
-import "swiper/css/pagination";
+import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 
 export default function Search() {
@@ -49,7 +48,7 @@ export default function Search() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: "Bearer " + token
           },
         }
       );
@@ -67,8 +66,7 @@ export default function Search() {
           spaceBetween={10}
           slidesPerView={4}
           navigation={{ clickable: true }}
-          pagination={{ clickable: true }}
-          modules={[Pagination, Navigation]}
+          modules={[Navigation]}
         >
           {data?.tracks?.items?.map((item) => (
             <SwiperSlide key={item.id}>
@@ -78,7 +76,7 @@ export default function Search() {
                 }}
                 className="item"
               >
-                <h5>{item.name}</h5>
+                <h4>{item.name}</h4>
                 <img src={item?.album?.images[0].url} alt="" />
               </div>
             </SwiperSlide>
@@ -88,16 +86,15 @@ export default function Search() {
       <h4>Albums</h4>
       <div>
         <Swiper
-          spaceBetween={50}
+          spaceBetween={10}
           slidesPerView={4}
           navigation={{ clickable: true }}
-          pagination={{ clickable: true }}
-          modules={[Pagination, Navigation]}
+          modules={[Navigation]}
         >
           {data?.albums?.items?.map((item) => (
             <SwiperSlide key={item.id}>
               <div className="item">
-                <h5>{item.name}</h5>
+                <h4>{item.name}</h4>
                 <img src={item?.images[0]?.url} alt="" />
               </div>
             </SwiperSlide>
@@ -107,17 +104,16 @@ export default function Search() {
       <h4>Playlists</h4>
       <div>
         <Swiper
-          spaceBetween={50}
+          spaceBetween={10}
           slidesPerView={4}
           navigation={{ clickable: true }}
-          pagination={{ clickable: true }}
-          modules={[Pagination, Navigation]}
+          modules={[Navigation]}
         >
           {data?.playlists?.items?.map((item) => (
             <SwiperSlide key={item.id}>
               <Link key={item.id} to={`/playlist/${item.id}`}>
                 <div className="item">
-                  <h5>{item.name}</h5>
+                  <h4>{item.name}</h4>
                   <img src={item?.images[0]?.url} alt="" />
                 </div>
               </Link>
@@ -128,17 +124,16 @@ export default function Search() {
       <h4>Artists</h4>
       <div className="artists">
         <Swiper
-          spaceBetween={50}
+          spaceBetween={10}
           slidesPerView={4}
           navigation={{ clickable: true }}
-          pagination={{ clickable: true }}
-          modules={[Pagination, Navigation]}
+          modules={[Navigation]}
         >
           {data?.artists?.items?.map((item) => (
             <SwiperSlide key={item.id}>
               <div className="item">
                 <p>Followers: {item.followers.total}</p>
-                <h5>{item.name}</h5>
+                <h4>{item.name}</h4>
                 <p>{item.type}</p>
                 <img src={item?.images[0]?.url} alt="" />
               </div>
@@ -171,26 +166,43 @@ const Container = styled.div`
   .swiper-wrapper {
     padding-left: 50px;
   }
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
   .item {
     display: flex;
     flex-direction: column;
     align-content: center;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
-    h5 {
+    /* transition: all 0.5s ease-in-out; */
+    width: 195px;
+    position: relative;
+
+    h4 {
       position: absolute;
+      text-decoration: none;
       opacity: 0;
+      text-align: center;
+      z-index: 1;
     }
-    &:hover {
-      h5 {
-        opacity: 1;
-      }
-    }
+
     img {
       aspect-ratio: 1/1;
       object-fit: cover;
-      width: 50%;
+      width: 100%;
+    }
+  }
+  .item:hover {
+    h4 {
+      opacity: 1;
+      filter: drop-shadow(0px 0px 0px white);
+    }
+    img {
+      filter: brightness(0.7);
     }
   }
 
@@ -204,8 +216,8 @@ const Container = styled.div`
     background-color: #292929;
     border-radius: 5%;
     padding: 10px;
-    width: 80%;
-    h5 {
+    width: 195px;
+    h4 {
       position: static;
       opacity: 1;
       margin: 0px;

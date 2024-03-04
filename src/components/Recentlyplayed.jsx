@@ -9,14 +9,14 @@ import { reducerCases } from "../utils/Constants";
 export default function Recentlyplayed() {
   const [{ recentlyPlayed ,token}] = useStateProvider();
 
-  const playTrack = async ( item) => {
-    try { 
-      debugger
-      const uri = item.track.uri;
-      const response = await axios.put(
+  const playTrack = async (item) => {
+    try {
+
+      await axios.put(
         `https://api.spotify.com/v1/me/player/play`,
         {
-          uri,
+          context_uri: item.context.uri,
+          offset: { uri: item.track.uri},
           position_ms: 0,
         },
         {
@@ -26,13 +26,10 @@ export default function Recentlyplayed() {
           },
         }
       );
-      console.log(response)
     } catch (error) {
       console.error("Error occurred while playing track:", error);
-      // Handle errors here
     }
   };
-
   return (
     <Container>
       <h2>Recently played tracks</h2>
@@ -68,27 +65,20 @@ const Container = styled.div`
   }
   width: 100%;
   ul {
-    display: flex;
-    list-style-type: none;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid; /* Change display to grid */
+    grid-template-columns: repeat(3, 1fr); /* Three columns with equal width */
+    grid-gap: 3rem; /* Gap between grid items */
     padding-left: 0px;
     margin-left: 1rem;
     margin-right: 1rem;
-    gap: 3rem;
+    list-style-type: none;
     li {
       transition: all 0.3s ease-in-out;
-      display: flex;
-      min-width: 400px;
-      flex: 1 1 0;
-      background: linear-gradient(#2a2a2a 0%, rgba(67, 67, 67, 0.693) 100%);
+      background: linear-gradient(#2a2a2a 0%, rgba(99, 99, 99, 0.693) 100%);
       align-items: center;
-      gap: 1rem;
       color: white;
-      border-top-right-radius: 1rem;
-      border-bottom-right-radius: 1rem;
-      border-top-left-radius: 1rem;
-      border-bottom-left-radius: 1rem;
+      border-radius: 1rem;
+      display: flex;
       img {
         width: 5vw;
         height: 75px;

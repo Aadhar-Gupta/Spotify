@@ -7,10 +7,11 @@ import Footer from "./Footer";
 import { useStateProvider } from "../utils/stateProvider";
 import axios from "axios";
 import { reducerCases } from "../utils/Constants";
-
+import SpotifyPlayer from "./Sdk";
 export default function Spotify() {
 
   const [{ token, userInfo }, dispatch] = useStateProvider();
+
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -32,7 +33,7 @@ export default function Spotify() {
       }
     getUserInfo();  // eslint-disable-next-line
   }, []);
-
+  SpotifyPlayer();
   return (
     <Container>
       <div className="spotify__body">

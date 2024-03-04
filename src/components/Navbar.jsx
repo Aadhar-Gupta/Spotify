@@ -4,6 +4,8 @@ import React from "react";
 import { useStateProvider } from "../utils/stateProvider";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
+import Typed from "typed.js";
+import { useEffect, useRef } from "react";
 
 export default function Navbar() {
   const Navigate = useNavigate();
@@ -14,6 +16,25 @@ export default function Navbar() {
     }
   };
   const [{ userInfo }] = useStateProvider();
+  const username = userInfo?.userName ? userInfo.userName : "";
+  const el = useRef(null);
+
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: [username,""],
+      startDelay: 300,
+      typeSpeed: 500,
+      backSpeed: 200,
+      loop: true,
+      backDelay: 200,
+      showCursor: false,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, [userInfo]);
+
   return (
     <Container>
       <div className="search__bar">
@@ -27,7 +48,7 @@ export default function Navbar() {
       <div className="avatar">
         <a href={userInfo?.Link}>
           <img src={userInfo?.userProfilePic} alt="" />
-          <span>{userInfo?.userName}</span>
+          <span ref={el}></span>
         </a>
       </div>
     </Container>
@@ -40,6 +61,7 @@ const Container = styled.div`
   align-items: center;
   padding: 1rem;
   height: 7vh;
+  z-index: 20;
   position: sticky;
   top: 0;
   transition: 0.3s ease-in-out;

@@ -7,8 +7,7 @@ import axios from "axios";
 import { reducerCases } from "../utils/Constants";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Pagination, Navigation } from "swiper/modules";
-import "swiper/css/pagination";
+import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 import { Link } from "react-router-dom";
 
@@ -37,18 +36,18 @@ export default function Featured() {
   return (
     <Container>
       <div>
+        <h2>Playlists for you</h2>
         <Swiper
           spaceBetween={50}
           slidesPerView={4}
           navigation={{ clickable: true }}
-          pagination={{ clickable: true }}
-          modules={[Pagination, Navigation]}
+          modules={[Navigation]}
         >
           {featuredPlaylists?.playlists?.items?.map((item) => (
             <SwiperSlide key={item.id}>
               <Link key={item.id} to={`/playlist/${item.id}`}>
                 <div className="item">
-                  <h5>{item.name}</h5>
+                  <h4>{item.name}</h4>
                   <img src={item?.images[0]?.url} alt="" />
                 </div>
               </Link>
@@ -62,10 +61,8 @@ export default function Featured() {
 
 const Container = styled.div`
   margin-left: 1rem;
-  h4 {
-    text-align: center;
-    text-decoration: underline;
-  }
+  margin-top: 1rem;
+
   .swiper-pagination-bullet {
     background: #fff;
     opacity: var(--swiper-pagination-bullet-inactive-opacity, 0.6);
@@ -76,34 +73,46 @@ const Container = styled.div`
   }
   .swiper-button-prev,
   .swiper-button-next {
+    background-color: black;
     color: #6dff1e;
   }
-   a{
-        text-decoration: none;
-        color: white;
-    }
+  .swiper-wrapper {
+    padding-left: 50px;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+  }
   .item {
     display: flex;
     flex-direction: column;
     align-content: center;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
-    h5 {
+    width: 195px;
+    position: relative;
+
+    h4 {
       position: absolute;
+      text-decoration: none;
       opacity: 0;
-    }
-    &:hover {
-      h5 {
-        opacity: 1;
-      }
+      text-align: center;
+      z-index: 1;
     }
 
     img {
       aspect-ratio: 1/1;
       object-fit: cover;
-      width: 50%;
+      width: 100%;
     }
   }
-
+  .item:hover {
+    h4 {
+      opacity: 1;
+      filter: drop-shadow(0px 0px 0px white);
+    }
+    img {
+      filter: brightness(0.7);
+    }
+  }
 `;
